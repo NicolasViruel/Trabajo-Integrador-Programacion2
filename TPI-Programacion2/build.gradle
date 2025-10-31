@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.mysql:mysql-connector-j:8.4.0'
+}
+
+application {
+    // mainClass = 'prog2int.Main.Main'
+    mainClass = 'prog2int.Main.TestConnection'
+}

@@ -1,0 +1,77 @@
+@startuml Empleado_Legajo
+title Diagrama UML - Relación Empleado → Legajo (1→1 unidireccional)
+
+package prog2int.Models {
+
+  class Empleado {
+    - id : Long
+    - eliminado : Boolean
+    - nombre : String
+    - apellido : String
+    - dni : String
+    - email : String
+    - fechaIngreso : LocalDate
+    - area : String
+    - legajo : Legajo
+
+    + Empleado()
+    + Empleado(id : Long, nombre : String, apellido : String, dni : String, email : String, fechaIngreso : LocalDate, area : String, legajo : Legajo)
+    + getId() : Long
+    + setId(id : Long)
+    + isEliminado() : Boolean
+    + setEliminado(eliminado : Boolean)
+    + getNombre() : String
+    + setNombre(nombre : String)
+    + getApellido() : String
+    + setApellido(apellido : String)
+    + getDni() : String
+    + setDni(dni : String)
+    + getEmail() : String
+    + setEmail(email : String)
+    + getFechaIngreso() : LocalDate
+    + setFechaIngreso(fechaIngreso : LocalDate)
+    + getArea() : String
+    + setArea(area : String)
+    + getLegajo() : Legajo
+    + setLegajo(legajo : Legajo)
+    + toString() : String
+  }
+
+  enum EstadoLegajo {
+    ACTIVO
+    INACTIVO
+  }
+
+  class Legajo {
+    - id : Long
+    - eliminado : Boolean
+    - nroLegajo : String
+    - categoria : String
+    - estado : EstadoLegajo
+    - fechaAlta : LocalDate
+    - observaciones : String
+
+    + Legajo()
+    + Legajo(id : Long, nroLegajo : String, categoria : String, estado : EstadoLegajo, fechaAlta : LocalDate, observaciones : String)
+    + getId() : Long
+    + setId(id : Long)
+    + isEliminado() : Boolean
+    + setEliminado(eliminado : Boolean)
+    + getNroLegajo() : String
+    + setNroLegajo(nroLegajo : String)
+    + getCategoria() : String
+    + setCategoria(categoria : String)
+    + getEstado() : EstadoLegajo
+    + setEstado(estado : EstadoLegajo)
+    + getFechaAlta() : LocalDate
+    + setFechaAlta(fechaAlta : LocalDate)
+    + getObservaciones() : String
+    + setObservaciones(observaciones : String)
+    + toString() : String
+  }
+
+  ' Relación unidireccional 1→1
+  Empleado "1" --> "1" Legajo : posee >
+}
+
+@enduml

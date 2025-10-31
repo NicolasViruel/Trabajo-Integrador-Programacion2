@@ -14,7 +14,7 @@ Este proyecto integra los siguientes conceptos:
 
 Separación de responsabilidades en cuatro capas:
 
-Presentación (Main/UI) → Menú de consola
+Presentación (prog2int.Main.Main/UI) → Menú de consola
 
 Lógica de Negocio (Service) → Validaciones y transacciones
 
@@ -135,11 +135,11 @@ db.password=
 4️⃣ Ejecutar
 
 Desde IDE (IntelliJ IDEA / Eclipse):
-Ejecutar clase Main.Main.
+Ejecutar clase prog2int.Main.Main.prog2int.Main.Main.
 
 Desde consola:
 
-java -cp "build/classes/java/main:<ruta-mysql-connector>" Main.Main
+java -cp "build/classes/java/main:<ruta-mysql-connector>" prog2int.Main.Main.prog2int.Main.Main
 
 Uso del Sistema
 Menú Principal
@@ -205,7 +205,7 @@ Actualizaciones parciales preservan valores previos si se deja vacío.
 
 Arquitectura
 ┌────────────────────────────────────┐
-│   Main / UI Layer (AppMenu.java)  │
+│   prog2int.Main.Main / UI Layer (AppMenu.java)  │
 │   → Interacción por consola        │
 └────────────────────────────────────┘
 │
