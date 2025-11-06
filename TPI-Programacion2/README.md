@@ -16,11 +16,7 @@ Este proyecto integra los siguientes conceptos:
 
 - Separación de responsabilidades en cuatro capas:
 
-<<<<<<< HEAD
-Presentación (prog2int.Main.Main/UI) → Menú de consola
-=======
 - Presentación (Main/UI) → Menú de consola
->>>>>>> bcfc4f6ecfd65baf03fc6e62731ca36f3cd3a50c
 
 - Lógica de Negocio (Service) → Validaciones y transacciones
 
@@ -98,31 +94,40 @@ SO	Windows / Linux / macOS
 
 Ejecutar el siguiente script en MySQL Workbench:
 
-    CREATE DATABASE IF NOT EXISTS db_empleados;
-    USE db_empleados;
+    CREATE DATABASE IF NOT EXISTS tpiprog2_empleado_legajo;
+    USE tpiprog2_empleado_legajo;
     
-    CREATE TABLE legajos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    -- Creacion de Tabla "legajo"
+    CREATE TABLE IF NOT EXISTS legajo (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    eliminado BOOLEAN DEFAULT FALSE,
+
     nro_legajo VARCHAR(20) NOT NULL UNIQUE,
     categoria VARCHAR(30),
     estado ENUM('ACTIVO', 'INACTIVO') NOT NULL,
     fecha_alta DATE,
-    observaciones VARCHAR(255),
-    eliminado BOOLEAN DEFAULT FALSE
+    observaciones VARCHAR(255)
     );
-    
-    CREATE TABLE empleados (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    -- Creacion de Tabla "empleado"
+    CREATE TABLE IF NOT EXISTS empleado (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    eliminado BOOLEAN DEFAULT FALSE,
+
     nombre VARCHAR(80) NOT NULL,
     apellido VARCHAR(80) NOT NULL,
     dni VARCHAR(15) NOT NULL UNIQUE,
     email VARCHAR(120),
     fecha_ingreso DATE,
     area VARCHAR(50),
-    legajo_id INT UNIQUE,
-    eliminado BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (legajo_id) REFERENCES legajos(id)
-    );
+
+    legajo_id BIGINT UNIQUE,
+    CONSTRAINT fk_empleado_legajo
+        FOREIGN KEY (legajo_id)
+        REFERENCES legajo(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
 
 2️⃣ Compilar el Proyecto
 # Linux/macOS
@@ -146,11 +151,7 @@ Ejecutar clase prog2int.Main.Main.prog2int.Main.Main.
 
 Desde consola:
 
-<<<<<<< HEAD
-java -cp "build/classes/java/main:<ruta-mysql-connector>" prog2int.Main.Main.prog2int.Main.Main
-=======
     java -cp "build/classes/java/main:<ruta-mysql-connector>" Main.Main
->>>>>>> bcfc4f6ecfd65baf03fc6e62731ca36f3cd3a50c
 
 Uso del Sistema
 Menú Principal
@@ -182,6 +183,17 @@ Menú Principal
     Categoría: Administrativo
     Estado (ACTIVO/INACTIVO): ACTIVO
     Fecha Alta (yyyy-mm-dd): 2023-04-01
+
+    -- Con SQL 
+    -- Insertar datos de prueba
+    -- Si intentás insertar otro empleado con el mismo legajo_id, MySQL te rechazará el insert (por el UNIQUE),
+    -- garantizando la relación 1→1 real.
+    
+    INSERT INTO legajo (nro_legajo, categoria, estado, fecha_alta)
+    VALUES ('TEC-002', 'Tecnico', 'INACTIVO', '2024-06-10');
+    
+    INSERT INTO empleado (nombre, apellido, dni, email, fecha_ingreso, area, legajo_id)
+    VALUES ('Luis', 'Pérez', '28999888', 'luis.perez@empresa.com', '2021-02-15', 'Técnica', 2);
 
 
 Si alguna de las operaciones (crear legajo / crear empleado) falla, el sistema ejecuta rollback() automático.
@@ -215,25 +227,6 @@ Rollback automático si falla la creación o asociación de legajo.
 
 Actualizaciones parciales preservan valores previos si se deja vacío.
 
-<<<<<<< HEAD
-Arquitectura
-┌────────────────────────────────────┐
-│   prog2int.Main.Main / UI Layer (AppMenu.java)  │
-│   → Interacción por consola        │
-└────────────────────────────────────┘
-│
-┌─────────────▼─────────────────────┐
-│   Service Layer                   │
-│   → Validaciones y transacciones  │
-│   EmpleadoService, LegajoService  │
-└─────────────▼─────────────────────┘
-│   DAO Layer (EmpleadoDAO, etc.)   │
-│   → Acceso a BD con JDBC          │
-└─────────────▼─────────────────────┘
-│   Entities Layer (Empleado, Legajo) │
-│   → Modelo de dominio              │
-└────────────────────────────────────┘
-=======
     Arquitectura
     ┌────────────────────────────────────┐
     │   Main / UI Layer (AppMenu.java)  │
@@ -251,7 +244,6 @@ Arquitectura
     │   Entities Layer (Empleado, Legajo) │
     │   → Modelo de dominio              │
     └────────────────────────────────────┘
->>>>>>> bcfc4f6ecfd65baf03fc6e62731ca36f3cd3a50c
 
 ## Ejemplo de Transacción
 
