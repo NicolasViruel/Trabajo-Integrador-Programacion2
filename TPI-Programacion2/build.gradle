@@ -18,7 +18,7 @@ dependencies {
 }
 
 application {
-     // mainClass = 'prog2int.Main.Main'
-    mainClass = 'prog2int.Main.TestConnection'
+     mainClass = 'prog2int.Main.Main'
+    // mainClass = 'prog2int.Main.TestConnection'
     // mainClass = 'prog2int.Main.TestService'
 }
